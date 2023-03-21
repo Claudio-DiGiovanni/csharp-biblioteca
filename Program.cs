@@ -53,11 +53,22 @@ switch (input)
                 break;
             default: break;
         }
-
-
-
         break;
+
+
+
     case "prenota":
+        Console.WriteLine("Cosa vorresti prenotare? ( libri | DVDs )");
+        var inputPrenotazione = Console.ReadLine();
+        switch(inputPrenotazione)
+        {
+            case "libri":
+                Console.WriteLine("inserisci il nome del libro che vuoi prenotare: ");
+                var obj = Console.ReadLine();
+                var libro = ;
+                break;
+            default: break;
+        }    
         break;
     case "aggiungi":
         break;

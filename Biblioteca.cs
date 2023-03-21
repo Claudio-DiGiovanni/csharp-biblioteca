@@ -18,7 +18,23 @@ public class Biblioteca
         return random;
     }
 
- 
+    public class Prenotazione : Biblioteca
+    {
+        string dataInizio;
+        string dataFine;
+        Utente utente;
+        Prodotto prodotto;
+
+        public Prenotazione(string dataInizio, string dataFine, Utente utente, Prodotto prodotto)
+        {
+            this.dataInizio = dataInizio;
+            this.dataFine = dataFine;
+            this.utente = utente;
+            this.prodotto = prodotto;
+        }
+    }
+
+
     public class Utente : Biblioteca
     {
         private string nome;
