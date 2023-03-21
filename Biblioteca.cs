@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using static Biblioteca;
 
 public class Biblioteca
 {
+
     public string GenerateId()
     {
         var random = Convert.ToString(new Random().Next(1, 999999));
@@ -35,6 +36,12 @@ public class Biblioteca
             this.telefono = telefono;
         }
 
+        public string Nome { get => nome; set => nome = value; }
+        public string Cognome { get => cognome; set => cognome = value; }
+        public string Email { get => email; set => email = value; }
+        public string Password { get => password; set => password = value; }
+        public string Telefono { get => telefono; set => telefono = value; }
+  
         public override string ToString()
         {
             return $"Nome: {nome}" + Environment.NewLine +
@@ -64,6 +71,12 @@ public class Biblioteca
             this.posizione = posizione;
             this.autore = autore;
         }
+
+        public string Titolo { get => titolo; set => titolo = value; }
+        public int Anno { get => anno; set => anno = value; }
+        public string Settore { get => settore; set => settore = value; }
+        public string Posizione { get => posizione; set => posizione = value; }
+        public string[] Autore { get => autore; set => autore = value; }
         public string GenerateCode()
         {
             return base.GenerateId();
@@ -87,6 +100,8 @@ public class Biblioteca
             this.durata = durata;
         }
 
+        public int Durata { get => durata; set => durata = value; }
+
         public override string ToString()
         {
             return base.ToString() + Environment.NewLine +
@@ -102,6 +117,8 @@ public class Biblioteca
         {
             this.pagine = pagine;
         }
+
+        public int Pagine { get => pagine; set => pagine = value; }
 
         public override string ToString()
         {
