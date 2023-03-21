@@ -97,6 +97,8 @@ public class Biblioteca
         {
             return base.GenerateId();
         }
+
+
         public override string ToString()
         {
             return $"Codice identificativo: {codice}" + Environment.NewLine +

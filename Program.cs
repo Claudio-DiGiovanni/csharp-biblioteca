@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel.Design;
 using static Biblioteca;
 var utenti = new List<Utente>();
 var utente1 = new Utente("Franco", "Peppone", "francopeppone@gmail.com", "qwerty", "3477418528");
@@ -28,54 +29,7 @@ DVDs.Add(DVD3);
 
 
 
-Console.WriteLine("Benvenuto in Biblioteca. Cosa vuoi fare? ( liste | prenota | aggiungi )");
-var input = Console.ReadLine();
 
-switch (input)
-{
-    case "liste":
-        Console.WriteLine("Che lista vuoi vedere? ( utenti | libri | DVDs )");
-        var inputList = Console.ReadLine();
-
-        switch(inputList)
-        {
-            case "utenti":
-                Console.WriteLine("Lista Utenti: ");
-                Console.WriteLine(ShowUsers(utenti));
-                break;
-            case "libri":
-                Console.WriteLine("Lista Libri: ");
-                Console.WriteLine(ShowBooks(libri));
-                break;
-            case "DVDs":
-                Console.WriteLine("Lista DVDs: ");
-                Console.WriteLine(ShowDVDs(DVDs));
-                break;
-            default: break;
-        }
-        break;
-
-
-
-    case "prenota":
-        Console.WriteLine("Cosa vorresti prenotare? ( libri | DVDs )");
-        var inputPrenotazione = Console.ReadLine();
-        switch(inputPrenotazione)
-        {
-            case "libri":
-                Console.WriteLine("inserisci il nome del libro che vuoi prenotare: ");
-                var obj = Console.ReadLine();
-                var libro = ;
-                break;
-            default: break;
-        }    
-        break;
-    case "aggiungi":
-        break;
-
-    default:
-        break;
-};
 
 
 
@@ -103,4 +57,129 @@ string ShowBooks(List<Libro> list)
 string ShowDVDs(List<DVD> list)
 {
     return string.Join(Environment.NewLine, list).ToString();
+}
+
+Libro CercaLibro(string titolo, List<Libro> lista)
+{
+    Libro ricerca = null;
+    foreach (var item in lista)
+    {
+        if (item.Titolo == titolo)
+        {
+            ricerca = item;
+        }
+    }
+    return ricerca;
+
+}
+
+DVD CercaDVD(string titolo, List<DVD> lista)
+{
+    DVD ricerca = null;
+    foreach (var item in lista)
+    {
+        if (item.Titolo == titolo)
+        {
+            ricerca = item;
+        }
+    }
+    return ricerca;
+
+}
+
+void ShowLists()
+{
+    Console.WriteLine("Che lista vuoi vedere? ( utenti | libri | DVDs )");
+    var inputList = Console.ReadLine();
+
+    switch (inputList)
+    {
+        case "utenti":
+            Console.WriteLine("Lista Utenti: ");
+            Console.WriteLine(ShowUsers(utenti));
+            break;
+        case "libri":
+            Console.WriteLine("Lista Libri: ");
+            Console.WriteLine(ShowBooks(libri));
+            break;
+        case "DVDs":
+            Console.WriteLine("Lista DVDs: ");
+            Console.WriteLine(ShowDVDs(DVDs));
+            break;
+        default: break;
+    }
+}
+
+Utente LogInUtente()
+{
+    Console.WriteLine("Per proseguire devi loggarti. Inserisci il tuo nome utente: ");
+    var nomeUtente = Console.ReadLine();
+    Console.WriteLine("inserisci la password: ");
+    var password = Console.ReadLine();
+        for (var i = 0; i < utenti.Count; i++)
+        {
+            if (nomeUtente == utenti[i].Nome && password == utenti[i].Password)
+            {
+                return utenti[i];
+            }
+        }
+    return utenti[0];
+}
+
+void Menu()
+{
+    Console.WriteLine("Benvenuto in Biblioteca. Cosa vuoi fare? ( liste | prenota | aggiungi )");
+    var input = Console.ReadLine();
+
+    switch (input)
+    {
+        case "liste":
+            ShowLists();
+            break;
+
+
+
+        case "prenota":
+            Console.WriteLine("Cosa vorresti prenotare? ( libri | DVDs )");
+            var inputPrenotazione = Console.ReadLine();
+            switch (inputPrenotazione)
+            {
+                case "libri":
+                    Console.WriteLine("inserisci il nome del libro che vuoi prenotare: ");
+                    foreach (var o in libri)
+                    {
+                        Console.WriteLine(o.Titolo);
+                    }
+                    var obj = Console.ReadLine();
+                    var libro = CercaLibro(obj, libri);
+                    var utente = LogInUtente();
+                    var dataInizio = Convert.ToString(DateTime.Today);
+                    Console.WriteLine("Fino a quando vuoi prenotarlo?");
+                    var dataFine = Console.ReadLine();
+                    var prenotazione = new Prenotazione(dataInizio, dataFine, utente, libro);
+                    return;
+
+                case "DVDs":
+                    Console.WriteLine("inserisci il nome del DVD che vuoi prenotare: ");
+                    foreach (var o in DVDs)
+                    {
+                        Console.WriteLine(o.Titolo);
+                    }
+                    var obj2 = Console.ReadLine();
+                    var DVD = CercaDVD(obj2, DVDs);
+                    var utenteLoggato = LogInUtente();
+                    var dataInizio1 = Convert.ToString(DateTime.Today);
+                    Console.WriteLine("Fino a quando vuoi prenotarlo?");
+                    var dataFine1 = Console.ReadLine();
+                    var prenotazione1 = new Prenotazione(dataInizio1, dataFine1, utenteLoggato, DVD);
+                    return;
+                default: return;
+            }
+            break;
+        case "aggiungi":
+            break;
+
+        default:
+            break;
+    };
 }
