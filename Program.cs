@@ -1,7 +1,5 @@
 ﻿
 using static Biblioteca;
-
-
 var utenti = new List<Utente>();
 var utente1 = new Utente("Franco", "Peppone", "francopeppone@gmail.com", "qwerty", "3477418528");
 var utente2 = new Utente("Giuseppe", "Rossi", "francopeppone@gmail.com", "qwerty", "3477418528");
@@ -28,14 +26,60 @@ DVDs.Add(DVD1);
 DVDs.Add(DVD2);
 DVDs.Add(DVD3);
 
-Console.WriteLine("Lista Utenti: ");
-Console.WriteLine(ShowUsers(utenti));
 
-Console.WriteLine("Lista Libri: ");
-Console.WriteLine(ShowBooks(libri));
 
-Console.WriteLine("Lista DVDs: ");
-Console.WriteLine(ShowDVDs(DVDs));
+Console.WriteLine("Benvenuto in Biblioteca. Cosa vuoi fare? ( liste | prenota | aggiungi )");
+var input = Console.ReadLine();
+
+switch (input)
+{
+    case "liste":
+        Console.WriteLine("Che lista vuoi vedere? ( utenti | libri | DVDs )");
+        var inputList = Console.ReadLine();
+
+        switch(inputList)
+        {
+            case "utenti":
+                Console.WriteLine("Lista Utenti: ");
+                Console.WriteLine(ShowUsers(utenti));
+                break;
+            case "libri":
+                Console.WriteLine("Lista Libri: ");
+                Console.WriteLine(ShowBooks(libri));
+                break;
+            case "DVDs":
+                Console.WriteLine("Lista DVDs: ");
+                Console.WriteLine(ShowDVDs(DVDs));
+                break;
+            default: break;
+        }
+
+
+
+        break;
+    case "prenota":
+        break;
+    case "aggiungi":
+        break;
+
+    default:
+        break;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 string ShowUsers(List<Utente> list)
 {
