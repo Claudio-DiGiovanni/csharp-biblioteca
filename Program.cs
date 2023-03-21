@@ -191,7 +191,62 @@ void Menu()
             }
             break;
         case "aggiungi":
-            Menu();
+            Console.WriteLine("Cosa vuoi aggiungere? ( libro | DVD )");
+            var inputAdd = Console.ReadLine();
+            switch (inputAdd)
+            {
+                case "libro":
+                    Console.WriteLine("Titolo: ");
+                    var titolo = Console.ReadLine();
+
+                    Console.WriteLine("Anno: ");
+                    var anno = Convert.ToInt32(Console.ReadLine());
+
+                    Console.WriteLine("Settore: ");
+                    var settore = Console.ReadLine();
+
+                    Console.WriteLine("Posizione: ");
+                    var posizione = Console.ReadLine();
+
+                    Console.WriteLine("Autore: ");
+                    string[] autore = { Console.ReadLine() , Console.ReadLine() };
+
+                    Console.WriteLine("Pagine: ");
+                    var pagine = Convert.ToInt32(Console.ReadLine());
+
+                    Libro libro = new Libro(titolo, anno, settore, posizione, autore, pagine);
+
+                    libri.Add(libro);
+                    Menu();
+                    break;
+                case "DVD":
+                    Console.WriteLine("Titolo: ");
+                    var titolo1 = Console.ReadLine();
+
+                    Console.WriteLine("Anno: ");
+                    var anno1 = Convert.ToInt32(Console.ReadLine());
+
+                    Console.WriteLine("Settore: ");
+                    var settore1 = Console.ReadLine();
+
+                    Console.WriteLine("Posizione: ");
+                    var posizione1 = Console.ReadLine();
+
+                    Console.WriteLine("Autore: ");
+                    string[] autore1 = { Console.ReadLine(), Console.ReadLine() };
+
+                    Console.WriteLine("Pagine: ");
+                    var durata = Convert.ToInt32(Console.ReadLine());
+
+                    DVD DVD = new DVD(titolo1, anno1, settore1, posizione1, autore1, durata);
+                    DVDs.Add(DVD);
+                    Menu();
+                    break;
+                default:
+                    Menu();
+                    break;
+            }
+            
             break;
 
         default:
