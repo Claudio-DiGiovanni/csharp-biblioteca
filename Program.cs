@@ -3,10 +3,10 @@ using System.ComponentModel.Design;
 using static Biblioteca;
 var utenti = new List<Utente>();
 var utente1 = new Utente("Franco", "Peppone", "francopeppone@gmail.com", "qwerty", "3477418528");
-var utente2 = new Utente("Giuseppe", "Rossi", "francopeppone@gmail.com", "qwerty", "3477418528");
-var utente3 = new Utente("Giulio", "Verdi", "francopeppone@gmail.com", "qwerty", "3477418528");
-var utente4 = new Utente("Marco", "Bianchi", "francopeppone@gmail.com", "qwerty", "3477418528");
-var utente5 = new Utente("Gianluca", "Blu", "francopeppone@gmail.com", "qwerty", "3477418528");
+var utente2 = new Utente("Giuseppe", "Rossi", "giusepperossi@gmail.com", "qwerty", "3477418528");
+var utente3 = new Utente("Giulio", "Verdi", "giulioverdi@gmail.com", "qwerty", "3477418528");
+var utente4 = new Utente("Marco", "Bianchi", "marcobianchi@gmail.com", "qwerty", "3477418528");
+var utente5 = new Utente("Gianluca", "Blu", "gianlucablu@gmail.com", "qwerty", "3477418528");
 utenti.Add(utente1);
 utenti.Add(utente2);
 utenti.Add(utente3);
@@ -26,6 +26,7 @@ var DVD3 = new DVD("Il Signore Degli Anelli", 2001, "fantasy", "C69", new[] {"St
 DVDs.Add(DVD1);
 DVDs.Add(DVD2);
 DVDs.Add(DVD3);
+var prenotazioni = new List<Prenotazione>();
 
 
 
@@ -33,7 +34,7 @@ DVDs.Add(DVD3);
 
 
 
-
+Menu();
 
 
 
@@ -55,6 +56,10 @@ string ShowBooks(List<Libro> list)
     return string.Join(Environment.NewLine, list).ToString();
 }
 string ShowDVDs(List<DVD> list)
+{
+    return string.Join(Environment.NewLine, list).ToString();
+}
+string ShowPrenotazioni(List<Prenotazione> list)
 {
     return string.Join(Environment.NewLine, list).ToString();
 }
@@ -89,7 +94,7 @@ DVD CercaDVD(string titolo, List<DVD> lista)
 
 void ShowLists()
 {
-    Console.WriteLine("Che lista vuoi vedere? ( utenti | libri | DVDs )");
+    Console.WriteLine("Che lista vuoi vedere? ( utenti | libri | DVDs | prenotazioni )");
     var inputList = Console.ReadLine();
 
     switch (inputList)
@@ -106,19 +111,23 @@ void ShowLists()
             Console.WriteLine("Lista DVDs: ");
             Console.WriteLine(ShowDVDs(DVDs));
             break;
+        case "prenotazioni":
+            Console.WriteLine("Lista DVDs: ");
+            Console.WriteLine(ShowPrenotazioni(prenotazioni));
+            break;
         default: break;
     }
 }
 
 Utente LogInUtente()
 {
-    Console.WriteLine("Per proseguire devi loggarti. Inserisci il tuo nome utente: ");
+    Console.WriteLine("Per proseguire devi loggarti. Inserisci il tuo nome utente o la tua mail: ");
     var nomeUtente = Console.ReadLine();
     Console.WriteLine("inserisci la password: ");
     var password = Console.ReadLine();
         for (var i = 0; i < utenti.Count; i++)
         {
-            if (nomeUtente == utenti[i].Nome && password == utenti[i].Password)
+            if (nomeUtente == utenti[i].Nome || nomeUtente == utenti[i].Email && password == utenti[i].Password)
             {
                 return utenti[i];
             }
@@ -135,6 +144,7 @@ void Menu()
     {
         case "liste":
             ShowLists();
+            Menu();
             break;
 
 
@@ -157,6 +167,8 @@ void Menu()
                     Console.WriteLine("Fino a quando vuoi prenotarlo?");
                     var dataFine = Console.ReadLine();
                     var prenotazione = new Prenotazione(dataInizio, dataFine, utente, libro);
+                    prenotazioni.Add(prenotazione);
+                    Menu();
                     return;
 
                 case "DVDs":
@@ -172,14 +184,18 @@ void Menu()
                     Console.WriteLine("Fino a quando vuoi prenotarlo?");
                     var dataFine1 = Console.ReadLine();
                     var prenotazione1 = new Prenotazione(dataInizio1, dataFine1, utenteLoggato, DVD);
+                    prenotazioni.Add(prenotazione1);
+                    Menu();
                     return;
-                default: return;
+                default: Menu(); break;
             }
             break;
         case "aggiungi":
+            Menu();
             break;
 
         default:
+            Menu();
             break;
     };
 }

@@ -32,6 +32,13 @@ public class Biblioteca
             this.utente = utente;
             this.prodotto = prodotto;
         }
+
+        public override string ToString()
+        {
+            return $"Utente: {utente.Nome + utente.Cognome}" + Environment.NewLine +
+                $"Prodotto: {prodotto.Titolo}" + Environment.NewLine +
+                $"Periodo: {dataInizio} - {dataFine}" + Environment.NewLine;
+        }
     }
 
 
