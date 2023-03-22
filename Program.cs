@@ -27,7 +27,12 @@ DVDs.Add(DVD1);
 DVDs.Add(DVD2);
 DVDs.Add(DVD3);
 var prenotazioni = new List<Prenotazione>();
-
+var prenotazione1 = new Prenotazione("12/13/14", "13/14/15", utente1, DVD1);
+var prenotazione2 = new Prenotazione("12/13/14", "13/14/15", utente1, DVD2);
+var prenotazione3 = new Prenotazione("12/13/14", "13/14/15", utente1, libro1);
+prenotazioni.Add(prenotazione1);
+prenotazioni.Add(prenotazione2);
+prenotazioni.Add(prenotazione3);
 
 
 
@@ -64,7 +69,7 @@ string ShowPrenotazioni(List<Prenotazione> list)
     return string.Join(Environment.NewLine, list).ToString();
 }
 
-Libro CercaLibro(string titolo, List<Libro> lista)
+Libro? CercaLibro(string titolo, List<Libro> lista)
 {
     Libro ricerca = null;
     foreach (var item in lista)
@@ -78,7 +83,7 @@ Libro CercaLibro(string titolo, List<Libro> lista)
 
 }
 
-DVD CercaDVD(string titolo, List<DVD> lista)
+DVD? CercaDVD(string titolo, List<DVD> lista)
 {
     DVD ricerca = null;
     foreach (var item in lista)
@@ -91,6 +96,34 @@ DVD CercaDVD(string titolo, List<DVD> lista)
     return ricerca;
 
 }
+Utente? CercaUtente(string nome, List<Utente> lista)
+{
+    Utente ricerca = null;
+    foreach (var item in lista)
+    {
+        if (item.Nome == nome || item.Cognome == nome)
+        {
+            ricerca = item;
+        }
+    }
+    return ricerca;
+}
+
+List<Prenotazione> CercaPrenotazione(string nome, List<Prenotazione> listaPrenotazioni)
+{
+    List<Prenotazione> prenotazioniTrovate = new List<Prenotazione>();
+
+    foreach (Prenotazione prenotazione in listaPrenotazioni)
+    {
+        if (prenotazione.utente.Nome == nome)
+        {
+            prenotazioniTrovate.Add(prenotazione);
+        }
+    }
+
+    return prenotazioniTrovate;
+}
+
 
 void ShowLists()
 {
@@ -112,7 +145,7 @@ void ShowLists()
             Console.WriteLine(ShowDVDs(DVDs));
             break;
         case "prenotazioni":
-            Console.WriteLine("Lista DVDs: ");
+            Console.WriteLine("Lista prenotazioni: ");
             Console.WriteLine(ShowPrenotazioni(prenotazioni));
             break;
         default: break;
@@ -137,7 +170,7 @@ Utente LogInUtente()
 
 void Menu()
 {
-    Console.WriteLine("Benvenuto in Biblioteca. Cosa vuoi fare? ( liste | prenota | aggiungi )");
+    Console.WriteLine("Benvenuto in Biblioteca. Cosa vuoi fare? ( liste | prenota | aggiungi | cerca )");
     var input = Console.ReadLine();
 
     switch (input)
@@ -191,7 +224,7 @@ void Menu()
             }
             break;
         case "aggiungi":
-            Console.WriteLine("Cosa vuoi aggiungere? ( libro | DVD )");
+            Console.WriteLine("Cosa vuoi aggiungere? ( libro | DVD | utente )");
             var inputAdd = Console.ReadLine();
             switch (inputAdd)
             {
@@ -242,11 +275,73 @@ void Menu()
                     DVDs.Add(DVD);
                     Menu();
                     break;
+                case "utente":
+                    Console.WriteLine("Nome: ");
+                    var nome = Console.ReadLine();
+
+                    Console.WriteLine("Cognome: ");
+                    var cognome = Console.ReadLine();
+
+                    Console.WriteLine("Email: ");
+                    var email = Console.ReadLine();
+
+                    Console.WriteLine("Password: ");
+                    var password = Console.ReadLine();
+
+                    Console.WriteLine("Telefono: ");
+                    var telefono = Console.ReadLine();
+
+                    Utente utente = new Utente(nome, cognome, email, password, telefono);
+                    utenti.Add(utente);
+                    Menu();
+                    break;
                 default:
                     Menu();
                     break;
             }
             
+            break;
+
+        case "cerca":
+            Console.WriteLine("cosa cerchi? ( utenti | libri | DVDs | prenotazioni )");
+            var inputSearch = Console.ReadLine();
+            switch (inputSearch)
+            {
+                case "utenti":
+                    Console.WriteLine("inserisci il nome o il cognome dell'utente che stai cercando");
+                    var user = Console.ReadLine();
+                    Console.WriteLine(CercaUtente(user, utenti) != null ? CercaUtente(user, utenti).ToString() : "Non è presente nessuno utente con questo nome");
+                    Menu();
+                    break;
+
+                case "libri":
+                    Console.WriteLine("inserisci il titolo del libro che stai cercando");
+                    var libro = Console.ReadLine();
+                    Console.WriteLine(CercaLibro(libro, libri) != null ? CercaLibro(libro, libri).ToString() : "Non è presente nessuno libro con questo titolo");
+                    Menu();
+                    break;
+
+                case "DVDs":
+                    Console.WriteLine("inserisci il titolo del DVD che stai cercando");
+                    var DVD = Console.ReadLine();
+                    Console.WriteLine(CercaDVD(DVD, DVDs) != null ? CercaDVD(DVD, DVDs).ToString() : "Non è presente nessuno DVD con questo titolo");
+                    Menu();
+                    break;
+                case "prenotazioni":
+                    Console.WriteLine("inserisci il nome dell'utente della prenotazione che stai cercando");
+                    var prenotazione = Console.ReadLine();
+                    string results = "";
+                    foreach (var item in CercaPrenotazione(prenotazione, prenotazioni)) {  results += item.ToString() + Environment.NewLine; };
+
+
+                    Console.WriteLine(CercaPrenotazione(prenotazione, prenotazioni).Count != 0 ? results : "Non è presente nessuna prenotazione per questo utente");
+                    Menu();
+                    break;
+                default:
+                    Menu();
+                    break;
+            }
+            Menu();
             break;
 
         default:

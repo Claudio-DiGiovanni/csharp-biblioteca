@@ -22,7 +22,7 @@ public class Biblioteca
     {
         string dataInizio;
         string dataFine;
-        Utente utente;
+        public Utente utente;
         Prodotto prodotto;
 
         public Prenotazione(string dataInizio, string dataFine, Utente utente, Prodotto prodotto)
